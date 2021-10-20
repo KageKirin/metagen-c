@@ -1,8 +1,20 @@
 # makefile for metagen-cpp
 
-all: build
+regular-build: build
+	cd build && \
+	cmake -G Ninja .. && \
+	cmake --build .
+
+zig-build:
 	zig build
-	cd build && cmake -G Ninja .. && cmake --build .
+
+
+all: \
+	regular-build \
+	linux \
+	macos \
+	windows \
+	zig-build
 
 build:
 	mkdir build
