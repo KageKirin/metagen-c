@@ -3,6 +3,7 @@
 # and oldest tested versions of CMake. This will ensure
 # you pick up the best policies.
 cmake_minimum_required(VERSION 3.1...3.21)
+include(FetchContent)
 
 # This is your project statement. You should always list languages;
 project(
@@ -10,4 +11,5 @@ project(
   VERSION 1.0
   LANGUAGES C)
 
+add_subdirectory(xxHash)
 add_subdirectory(src)
