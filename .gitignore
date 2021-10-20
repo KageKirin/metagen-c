@@ -3,3 +3,6 @@
 ## build dir
 zig-cache/
 zig-out/
+
+## .meta files
+*.meta
