@@ -1,6 +1,7 @@
 # .gitignore for Metagen-cpp
 
 ## build dir
+build/
 zig-cache/
 zig-out/
 
