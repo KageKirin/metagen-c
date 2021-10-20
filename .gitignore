@@ -1,0 +1,4 @@
+# .gitignore for Metagen-cpp
+
+## build dir
+build/
