@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     {
         fprintf(stdout, "Metagen: generate Unity .meta files for given inputs\n");
         fprintf(stdout, "\tUsage: %s [seed] <files...>\n", argv[0]);
-        fprintf(stdout, "\t[seed]: unique determinant used as seed for hashes. E.g. package name.\n", argv[0]);
+        fprintf(stdout, "\t[seed]: unique determinant used as seed for hashes. E.g. package name.\n");
         return -1;
     }
 
@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     for (int i = 2; i < argc; i++)
     {
         struct stat _stat;
-        if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR | S_IFLNK))
+        if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR))
         {
             printf("%i ->> %s", i, argv[i]);
             XXH128_hash_t hash = XXH3_128bits_withSeed(argv[i], strlen(argv[i]), seed);
