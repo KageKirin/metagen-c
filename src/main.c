@@ -26,6 +26,12 @@ int main(int argc, char** argv)
     XXH64_hash_t seed = XXH64(argv[1], strlen(argv[1]), 0);
     for (int i = 2; i < argc; i++)
     {
+        const char* ext = strrchr(args.argv[i], '.');
+        if (ext && strcmp(ext, ".meta") == 0)
+        {
+            continue;  // skip .meta files
+        }
+
         struct stat _stat;
         if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR))
         {
