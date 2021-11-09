@@ -4,27 +4,35 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "argus_macros.h"
+#include "argus_option.h"
 #include "xxhash.h"
 
 void generateMetaFile(const char* filename, XXH128_hash_t hash);
 
+extern char* argus_programName;
+
+int overwriteExisting = 0;
+
 int main(int argc, char** argv)
 {
-    if (argc > 1 && argc < 3)
+    argus_programName = argv[0];  //"Metagen: generate Unity .meta files for given inputs";
+
+    char*           seedString;
+    argus_Arguments args;
+
+    const argus_Option g_Options[] = {
+        {'s', "seed", "unique determinant used as seed for hashes. E.g. package name.", &seedString, argus_setOptionExplicitString},
+        {.description = "files...", &args, argus_setOptionPositionalArguments},
+    };
+
+    if (argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), argc - 1, argv + 1))
     {
-        fprintf(stderr, "wrong number of arguments\n");
+        return 1;
     }
 
-    if (argc < 3)
-    {
-        fprintf(stdout, "Metagen: generate Unity .meta files for given inputs\n");
-        fprintf(stdout, "\tUsage: %s [seed] <files...>\n", argv[0]);
-        fprintf(stdout, "\t[seed]: unique determinant used as seed for hashes. E.g. package name.\n");
-        return -1;
-    }
-
-    XXH64_hash_t seed = XXH64(argv[1], strlen(argv[1]), 0);
-    for (int i = 2; i < argc; i++)
+    XXH64_hash_t seed = XXH64(seedString, strlen(seedString), 0);
+    for (int i = 0; i < args.argc; i++)
     {
         const char* ext = strrchr(args.argv[i], '.');
         if (ext && strcmp(ext, ".meta") == 0)
@@ -35,17 +43,17 @@ int main(int argc, char** argv)
         struct stat _stat;
         if (stat(args.argv[i], &_stat) == 0 && (_stat.st_mode & (S_IFDIR) || _stat.st_mode & (S_IFREG)))
         {
-            printf("%i ->> %s", i, argv[i]);
-            XXH128_hash_t hash = XXH3_128bits_withSeed(argv[i], strlen(argv[i]), seed);
+            printf("%i ->> %s", i, args.argv[i]);
+            XXH128_hash_t hash = XXH3_128bits_withSeed(args.argv[i], strlen(args.argv[i]), seed);
 
             // Mark this as a random GUID per RFC-4122 section 4.4
-            char* bytes = (char*)&hash;
+            char*         bytes   = (char*)&hash;
             unsigned char version = 4;
             bytes[6]              = (bytes[6] & 0x0F) | (version << 4);
             bytes[9]              = (bytes[9] & 0x3F) | 0x80;
             printf(": %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
 
-            generateMetaFile(argv[i], hash);
+            generateMetaFile(args.argv[i], hash);
         }
     }
 
