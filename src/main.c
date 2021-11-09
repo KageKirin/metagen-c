@@ -23,6 +23,7 @@ int main(int argc, char** argv)
 
     const argus_Option g_Options[] = {
         {'s', "seed", "unique determinant used as seed for hashes. E.g. package name.", &seedString, argus_setOptionExplicitString},
+        {'o', "overwrite", "overwrite existing .meta files", &overwriteExisting, argus_setOptionImplicit},
         {.description = "files...", &args, argus_setOptionPositionalArguments},
     };
 
@@ -69,6 +70,13 @@ void generateMetaFile(const char* filename, XXH128_hash_t hash)
     strncat(metafilename, ".meta", 5);
 
     printf("\t %s -> %s\n", filename, metafilename);
+
+    struct stat _stat;
+    if (!overwriteExisting && stat(metafilename, &_stat) == 0 && _stat.st_mode & (S_IFREG))
+    {
+        printf("\texists => skipping.\n");
+        return;
+    }
 
     FILE* fd = fopen(metafilename, "w");
     assert(fd);
