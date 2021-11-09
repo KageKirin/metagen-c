@@ -17,14 +17,11 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - uses: goto-bus-stop/setup-zig@v1
-        with:
-          version: 0.8.1
       - name: Build
         run: |
-          make all
+          make build
       - uses: actions/upload-artifact@v2
         with:
           name: metagen
           path: |
-            zig-out/bin/metagen
+            bin/linux/metagen
