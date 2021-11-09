@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         }
 
         struct stat _stat;
-        if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR))
+        if (stat(args.argv[i], &_stat) == 0 && (_stat.st_mode & (S_IFDIR) || _stat.st_mode & (S_IFREG)))
         {
             printf("%i ->> %s", i, argv[i]);
             XXH128_hash_t hash = XXH3_128bits_withSeed(argv[i], strlen(argv[i]), seed);
@@ -70,17 +70,21 @@ void generateMetaFile(const char* filename, XXH128_hash_t hash)
         return;
     }
 
-    fprintf(fd, "fileFormatVersion: 2\n");
-    fprintf(fd, "guid: %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
-    fprintf(fd, "MonoImporter:\n");
-    fprintf(fd, "  externalObjects: {}\n");
-    fprintf(fd, "  serializedVersion: 2\n");
-    fprintf(fd, "  defaultReferences: []\n");
-    fprintf(fd, "  executionOrder: 0\n");
-    fprintf(fd, "  icon: {instanceID: 0}\n");
-    fprintf(fd, "  userData: \n");
-    fprintf(fd, "  assetBundleName: \n");
-    fprintf(fd, "  assetBundleVariant: \n");
+    FILE* outputs[] = {stdout, fd};
+    for(int i = 0; i < 2; i++)
+    {
+        fprintf(outputs[i], "fileFormatVersion: 2\n");
+        fprintf(outputs[i], "guid: %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
+        fprintf(outputs[i], "MonoImporter:\n");
+        fprintf(outputs[i], "  externalObjects: {}\n");
+        fprintf(outputs[i], "  serializedVersion: 2\n");
+        fprintf(outputs[i], "  defaultReferences: []\n");
+        fprintf(outputs[i], "  executionOrder: 0\n");
+        fprintf(outputs[i], "  icon: {instanceID: 0}\n");
+        fprintf(outputs[i], "  userData: \n");
+        fprintf(outputs[i], "  assetBundleName: \n");
+        fprintf(outputs[i], "  assetBundleVariant: \n");
+    }
 
     fclose(fd);
 }
