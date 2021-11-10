@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 void generateMetaFile(const char* filename, XXH128_hash_t hash)
 {
     size_t strsize = strlen(filename);
-    char* metafilename = alloca(strsize + 6);
+    char metafilename[strsize + 6];
     memset(metafilename, 0, strsize + 6);
     strncpy(metafilename, filename, strsize);
     strncat(metafilename, ".meta", 5);

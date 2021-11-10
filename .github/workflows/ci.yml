@@ -41,11 +41,11 @@ jobs:
         run: |
           sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
           sudo apt-get update -y -qq
-          sudo apt-get install libsdl2-dev fd-find ripgrep
+          sudo apt-get install fd-find ripgrep
           alias fd='fdfind'
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install sdl2 fd ripgrep
+        run: brew install fd ripgrep
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         run: |
@@ -65,5 +65,4 @@ jobs:
           ls build/*
           ls *
       - name: Build
-        if: runner.os != 'Windows'
         run: make build

@@ -26,7 +26,7 @@ jobs:
       ## Setup
       - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Install dependencies
-        run: brew install sdl2 fd ripgrep
+        run: brew install fd ripgrep
       - name: Install GENIE
         run: make update-genie-os
 
