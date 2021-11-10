@@ -7,11 +7,19 @@ on:
   push:
     branches:
       - '*'
+      - '!win*'
+      - '!mac*'
+      - '!osx*'
+      - '!linux*'
       - '!master'
       - '!main'
   pull_request:
     branches:
       - '*'
+      - '!win*'
+      - '!mac*'
+      - '!osx*'
+      - '!linux*'
       - '!master'
       - '!main'
 
