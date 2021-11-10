@@ -480,8 +480,8 @@ newtoolchain {
 		links {
 			"rt",
 			"dl",
-			"X11",
-			"GL",
+			--"X11",
+			--"GL",
 			"pthread",
 		}
 		linkoptions {
