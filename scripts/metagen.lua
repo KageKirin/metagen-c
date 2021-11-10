@@ -129,6 +129,14 @@ local librarypath   = path.join(locationpath, '../lib')
 		applytoolchain('emscripten-asmjs')
 	elseif _OPTIONS.toolchain == 'wasm' then
 		applytoolchain('emscripten-wasm')
+	elseif _OPTIONS.toolchain == 'zig' then
+		applytoolchain('zig')
+	elseif _OPTIONS.toolchain == 'zig-macos' then
+		applytoolchain('zig-macos')
+	elseif _OPTIONS.toolchain == 'zig-linux' then
+		applytoolchain('zig-linux')
+	elseif _OPTIONS.toolchain == 'zig-windows' then
+		applytoolchain('zig-windows')
 	end
 
 	startproject "argus-test"

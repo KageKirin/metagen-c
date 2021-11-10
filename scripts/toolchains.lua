@@ -480,8 +480,8 @@ newtoolchain {
 		links {
 			"rt",
 			"dl",
-			"X11",
-			"GL",
+			--"X11",
+			--"GL",
 			"pthread",
 		}
 		linkoptions {
@@ -590,6 +590,134 @@ newtoolchain {
 			"-s FULL_ES3=1",
 			"-s ALLOW_MEMORY_GROWTH=1",
 			"-g",
+		}
+
+		-- avoid release build errors on missing asserts
+		configuration { "release" }
+			buildoptions {
+				"-Wno-unused-parameter",
+				"-Wno-unused-variable",
+			}
+		configuration {}
+	end
+}
+
+
+newtoolchain {
+	name = "zig",
+	description = "ZIG based toolchain",
+	cc   = "zig cc",
+	cxx  = "zig c++",
+	ar   = "zig ar",
+	llvm = true, --optional
+	variables = {}, --optional, environment variables to substitute to their actual path
+
+	configure = function()
+		removeflags {
+			"UseLDResponseFile",
+			"UseObjectResponseFile",
+		}
+
+		buildoptions {
+		}
+
+		linkoptions {
+		}
+
+		-- avoid release build errors on missing asserts
+		configuration { "release" }
+			buildoptions {
+				"-Wno-unused-parameter",
+				"-Wno-unused-variable",
+			}
+		configuration {}
+	end
+}
+
+newtoolchain {
+	name = "zig-macos",
+	description = "ZIG based toolchain targeting x86_64 macOS",
+	cc   = "zig cc",
+	cxx  = "zig c++",
+	ar   = "zig ar",
+	llvm = true, --optional
+	variables = {}, --optional, environment variables to substitute to their actual path
+
+	configure = function()
+		removeflags {
+			"UseLDResponseFile",
+			"UseObjectResponseFile",
+		}
+
+		buildoptions {
+			"-target x86_64-macos"
+		}
+
+		linkoptions {
+		}
+
+		-- avoid release build errors on missing asserts
+		configuration { "release" }
+			buildoptions {
+				"-Wno-unused-parameter",
+				"-Wno-unused-variable",
+			}
+		configuration {}
+	end
+}
+
+newtoolchain {
+	name = "zig-windows",
+	description = "ZIG based toolchain targeting x86_64 Windows",
+	cc   = "zig cc",
+	cxx  = "zig c++",
+	ar   = "zig ar",
+	llvm = true, --optional
+	variables = {}, --optional, environment variables to substitute to their actual path
+
+	configure = function()
+		removeflags {
+			"UseLDResponseFile",
+			"UseObjectResponseFile",
+		}
+
+		buildoptions {
+			"-target x86_64-windows"
+		}
+
+		linkoptions {
+		}
+
+		-- avoid release build errors on missing asserts
+		configuration { "release" }
+			buildoptions {
+				"-Wno-unused-parameter",
+				"-Wno-unused-variable",
+			}
+		configuration {}
+	end
+}
+
+newtoolchain {
+	name = "zig-linux",
+	description = "ZIG based toolchain targeting x86_64 Linux MUSL",
+	cc   = "zig cc",
+	cxx  = "zig c++",
+	ar   = "zig ar",
+	llvm = true, --optional
+	variables = {}, --optional, environment variables to substitute to their actual path
+
+	configure = function()
+		removeflags {
+			"UseLDResponseFile",
+			"UseObjectResponseFile",
+		}
+
+		buildoptions {
+			"-target x86_64-linux-musl"
+		}
+
+		linkoptions {
 		}
 
 		-- avoid release build errors on missing asserts
