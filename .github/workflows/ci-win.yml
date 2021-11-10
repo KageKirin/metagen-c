@@ -25,7 +25,6 @@ jobs:
       - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Install dependencies
         run: |
-          vcpkg.exe install sdl2:x64-windows
           choco install fd ripgrep
       - name: Install GENIE
         run: make update-genie-os
