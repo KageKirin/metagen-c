@@ -373,6 +373,7 @@ newtoolchain {
 				"/clang:-Wno-unknown-warning-option",
 				"/clang:-Wno-unused-command-line-argument",
 				"/clang:-Wno-unused-but-set-parameter",
+				"/clang:-fms-compatibility-version=19.00",
 			}
 
 			linkoptions {
@@ -394,6 +395,7 @@ newtoolchain {
 				"-Wno-unknown-warning-option",
 				"-Wno-unused-command-line-argument",
 				"-Wno-unused-but-set-parameter",
+				"-fms-compatibility-version=19.00",
 			}
 
 			linkoptions {
