@@ -1,11 +1,5 @@
-# makefile for metagen-cpp
+# makefile for Argus
 
-all:
-	zig build
-
-clean:
-	rm -rf zig-out
-	rm -rf zig-cache
-
-format:
-	clang-format -i src/*.c #src/*.h
+include make/projgen.make
+include make/format.make
+include make/genie.make

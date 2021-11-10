@@ -1,8 +1,13 @@
 # .gitignore for Metagen-cpp
 
 ## build dir
+bin/
+build/
 zig-cache/
 zig-out/
 
 ## .meta files
 *.meta
+
+## libs (use add --force to add)
+libs

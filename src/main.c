@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     {
         fprintf(stdout, "Metagen: generate Unity .meta files for given inputs\n");
         fprintf(stdout, "\tUsage: %s [seed] <files...>\n", argv[0]);
-        fprintf(stdout, "\t[seed]: unique determinant used as seed for hashes. E.g. package name.\n", argv[0]);
+        fprintf(stdout, "\t[seed]: unique determinant used as seed for hashes. E.g. package name.\n");
         return -1;
     }
 
@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     for (int i = 2; i < argc; i++)
     {
         struct stat _stat;
-        if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR | S_IFLNK))
+        if (stat(argv[i], &_stat) == 0 && _stat.st_mode & (S_IFDIR))
         {
             printf("%i ->> %s", i, argv[i]);
             XXH128_hash_t hash = XXH3_128bits_withSeed(argv[i], strlen(argv[i]), seed);
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
             unsigned char version = 4;
             bytes[6]              = (bytes[6] & 0x0F) | (version << 4);
             bytes[9]              = (bytes[9] & 0x3F) | 0x80;
-            printf(": %llx%llx\n", hash.high64, hash.low64);
+            printf(": %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
 
             generateMetaFile(argv[i], hash);
         }
@@ -65,7 +65,7 @@ void generateMetaFile(const char* filename, XXH128_hash_t hash)
     }
 
     fprintf(fd, "fileFormatVersion: 2\n");
-    fprintf(fd, "guid: %llx%llx\n", hash.high64, hash.low64);
+    fprintf(fd, "guid: %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
     fprintf(fd, "MonoImporter:\n");
     fprintf(fd, "  externalObjects: {}\n");
     fprintf(fd, "  serializedVersion: 2\n");
