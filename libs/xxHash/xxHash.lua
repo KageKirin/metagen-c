@@ -62,7 +62,7 @@ project "xxhash"
 
 	files {
 		path.join(xxhash_root, "*.h"),
-		path.join(xxhash_root, "*.c"),
+		path.join(xxhash_root, "xxhash.c"),
 	}
 
 	configuration {}
