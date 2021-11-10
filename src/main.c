@@ -37,7 +37,7 @@ int main(int argc, char** argv)
             unsigned char version = 4;
             bytes[6]              = (bytes[6] & 0x0F) | (version << 4);
             bytes[9]              = (bytes[9] & 0x3F) | 0x80;
-            printf(": %llx%llx\n", hash.high64, hash.low64);
+            printf(": %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
 
             generateMetaFile(argv[i], hash);
         }
@@ -65,7 +65,7 @@ void generateMetaFile(const char* filename, XXH128_hash_t hash)
     }
 
     fprintf(fd, "fileFormatVersion: 2\n");
-    fprintf(fd, "guid: %llx%llx\n", hash.high64, hash.low64);
+    fprintf(fd, "guid: %llx%llx\n", (unsigned long long)hash.high64, (unsigned long long)hash.low64);
     fprintf(fd, "MonoImporter:\n");
     fprintf(fd, "  externalObjects: {}\n");
     fprintf(fd, "  serializedVersion: 2\n");
