@@ -65,5 +65,4 @@ jobs:
           ls build/*
           ls *
       - name: Build
-        if: runner.os != 'Windows'
         run: make build
