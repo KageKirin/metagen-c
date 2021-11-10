@@ -67,22 +67,3 @@ jobs:
       - name: Build
         if: runner.os != 'Windows'
         run: make build
-
-      - name: Upload artifacts (Linux)
-        uses: actions/upload-artifact@v2
-        if: runner.os == 'Linux'
-        with:
-          name: metagen-linux
-          path: bin/linux/metagen
-      - name: Upload artifacts (macOS)
-        uses: actions/upload-artifact@v2
-        if: runner.os == 'macOS'
-        with:
-          name: metagen-macos
-          path: bin/darwin/metagen
-      - name: Upload artifacts (Windows)
-        uses: actions/upload-artifact@v2
-        if: runner.os == 'Windows'
-        with:
-          name: metagen.exe
-          path: bin/windows/metagen.exe
